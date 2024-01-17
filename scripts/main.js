@@ -3,17 +3,21 @@
 // Unit 0 = Imperial
 // Unit 1 = Metric
 
+// This API key is provided by OpenWeatherMap.org
+// You can get your own API key by signing up for a FREE FOREVER account on https://home.openweathermap.org/users/sign_up
 const APIKEY = "84b3fab687879f825802c0ad57147510";
 const cookiesExpiresDays = 1;
 
-// Load the home page weather
+// Load the weather on the home page
 function home() {
     if (getCookie("latitude") != "" && getCookie("longitude") != "") {
         document.getElementById("container").style.display = "block";
 
-        city = getWeather(0, getCookie("latitude"), getCookie("longitude"), 1);
-
-        displayWeather(city);
+        getWeather(0, latitude = getCookie("latitude"), longitude = getCookie("longitude"), mode = 1).then(
+            response => {
+                displayWeather(response);
+            }
+        );
 
     } else {
         document.getElementById("status").style.display = "block";
@@ -22,7 +26,7 @@ function home() {
         getLocation();
     }
 }
-// Load the search page weather
+// Load the weather on the search page 
 function search() {
     cityName = GetParameter("city");
 
@@ -30,12 +34,15 @@ function search() {
     
     document.getElementById("container").style.display = "block";
 
-    city = getWeather(cityName);
-    displayWeather(city);
+    getWeather(cityName, mode = 0).then(
+        response => {
+            displayWeather(response);
+        }
+    );
 }
 
 // Get the weather from the API
-function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit = 0) {
+async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit = -1) {
     let url = "https://api.openweathermap.org/data/2.5/weather?lang=en&appid=" + APIKEY
     
     if (mode == 0) {
@@ -44,14 +51,18 @@ function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit = 0) {
         url += "&lat=" + latitude + "&lon=" + longitude;
     }
 
+    if (unit == -1) {
+        unit = Number(getCookie("unit"));
+    }
+    
     if (unit == 0) {
         url += "&units=imperial";
-    } else {
+    } else if (unit == 1) {
         url += "&units=metric";
     }
 
-    // TEST API RESPONSE
-    return '{"coord":{"lon":-0.1257,"lat":51.5085},"weather":[{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04n"}],"base":"stations","main":{"temp":32.77,"feels_like":25.79,"temp_min":29.75,"temp_max":36.18,"pressure":993,"humidity":80},"visibility":10000,"wind":{"speed":8.01,"deg":40,"gust":13},"clouds":{"all":100},"dt":1705521210,"sys":{"type":2,"id":268730,"country":"GB","sunrise":1705478291,"sunset":1705508528},"timezone":0,"id":2643743,"name":"London","cod":200}';
+    let response = await fetch(url);
+    return await response.text();
 }
 
 // Display the weather in the container
@@ -108,10 +119,11 @@ function displayWeather(city, metric = 0) {
 // Set the unit in a cookie
 function setUnit(unit) {
     if (unit == 0) {
-        setCookie("unit", "imperial", 364);
+        setCookie("unit", "0", 364);
     } else {
-        setCookie("unit", "metric", 364);
+        setCookie("unit", "1", 364);
     }
+    location.reload();
 }
 
 // Set a cookie

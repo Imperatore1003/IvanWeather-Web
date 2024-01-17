@@ -7,7 +7,7 @@
 }
 
 #status {
-    display: none;
+    display: block;
 }
 #container {
     display: none;
