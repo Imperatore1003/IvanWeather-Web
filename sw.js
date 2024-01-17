@@ -1,4 +1,4 @@
-const cacheVersion = "v2";
+const cacheVersion = "v3";
 const statiCache = "site-static-" + cacheVersion;
 const dynamicCache = "site-dynamic-" + cacheVersion;
 
@@ -8,6 +8,15 @@ const pages = [
 
 const pagesFullURL = [
     "/fallback.html"
+];
+
+const jsS = [
+    "/js/app.js",
+    "/js/main.js"
+]
+
+const cssS = [
+    "/style.css"
 ];
 
 const imgs = [
@@ -39,7 +48,8 @@ const imgs = [
     "/img/ms-icon-144x144.png",
     "/img/ms-icon-70x70.png",
     "/img/ms-icon-150x150.png",
-    "/img/ms-icon-310x310.png"
+    "/img/ms-icon-310x310.png",
+    "/favicon.ico"
 ];
 const files = [
     "/manifest.json"
@@ -87,6 +97,8 @@ self.addEventListener("install", evt => {
             console.log("Caching shell assets");
             cache.addAll(pages);
             cache.addAll(pagesFullURL);
+            cache.addAll(jsS);
+            cache.addAll(cssS);
             cache.addAll(imgs);
             cache.addAll(thirdParty);
             cache.addAll(files);
