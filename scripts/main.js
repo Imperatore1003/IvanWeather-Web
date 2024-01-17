@@ -25,7 +25,7 @@ function home() {
     if (getCookie("latitude") != "" && getCookie("longitude") != "") {
         document.getElementById("container").style.display = "block";
 
-        city = getWeather(0, getCookie("latitude"), getCookie("longitude"));
+        city = getWeather(0, getCookie("latitude"), getCookie("longitude"), 1);
 
         displayWeather(city);
 
@@ -40,7 +40,7 @@ function home() {
 function search() {
     cityName = GetParameter("city");
 
-    document.title = "Search " + cityName + " - IvanWeather"
+    document.title = "Search " + cityName + " - IvanWeather";
     
     document.getElementById("container").style.display = "block";
 
@@ -50,7 +50,7 @@ function search() {
 
 function setCookie(name, value) {
     const d = new Date();
-    const exdays = 7;
+    const exdays = 1;
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     let expires = "expires="+d.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
@@ -114,14 +114,8 @@ function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit = 0) {
         url += "&units=metric";
     }
 
-    console.log(url);
-
-    // Ritorna una stringa statica per non consumare chiamate a OpenWeatherMap
-    if (latitude != 0) {
-        return cityString1;
-    } else {
-        return cityString2;
-    }
+    // Ritorna una stringa statica per non consumare chiamate a OpenWeatherMap - TEST API RESPONSE
+    return '{"coord":{"lon":-0.1257,"lat":51.5085},"weather":[{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04n"}],"base":"stations","main":{"temp":32.77,"feels_like":25.79,"temp_min":29.75,"temp_max":36.18,"pressure":993,"humidity":80},"visibility":10000,"wind":{"speed":8.01,"deg":40,"gust":13},"clouds":{"all":100},"dt":1705521210,"sys":{"type":2,"id":268730,"country":"GB","sunrise":1705478291,"sunset":1705508528},"timezone":0,"id":2643743,"name":"London","cod":200}';
 }
 
 function displayWeather(city, metric = 0) {
@@ -188,5 +182,3 @@ function GetParameter(parameterName) {
     }
     return result;
 }
-
-home();
