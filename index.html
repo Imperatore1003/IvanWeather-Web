@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check the weather in your location simply - IvanWeather</title>
+    <!-- <link rel="icon" href="/img/IvanWeather.svg" type="image/svg+xml"> -->
+    <!-- <link rel="icon" href="/android-icon-144x144.png"> -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+
+    <!-- https://getbootstrap.com/docs/5.2/ -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="description" content="IvanWeather is a weather service that returns the local wheather of a given city."/>
+    <meta name="robots" content="index, nofollow"/>
+
+    <meta property="og:url" content="https://ivanweather.com"/>
+    <meta property="og:title" content="IvanWeather"/>
+    <meta property="og:image" content="https://ivanweather.com/img/IvanWeather.png"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="IvanWeather is a weather service that returns the local wheather of a given city."/>
+
+    <link rel="stylesheet" href="/style.css">
+    
+    <meta name="google-site-verification" content="yCJPO9bmJl1xND72DNVgzUr4hFogTQbTNT4qf0HrULo"/>
+    <link rel="canonical" href="https://ivanweather.herokuapp.com/"/>
+</head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">IvanWeather</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Units
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="units" id="flexRadioDefault1" {% if check == 0 %}checked{% endif %}>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Fahrenheit
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="units" id="flexRadioDefault2" {% if check == 1 %}checked{% endif %}>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Celsius
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <form class="d-flex" role="search" method="get" action="/search.html">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="city">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <h1 style="text-align: center;">Check the weather in your location simply - IvanWeather</h1>
+
+            <h3 id="status"></h3>
+            <div class="container" id="container">
+                <div class="weather card border-dark text-center text-bg-light mb-3" style="min-width: 9.125rem; max-width: 18rem;">
+                    <ul class="list-group list-group-flush">
+                        <div class="card-header">Weather today in</div>
+                        <li class="list-group-item">
+                            <h5 class="card-title"><span id="spCity"></span>, <span id="spCountry"></span></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle mb-2 text-muted"><span id="spMax"></span>°/<span id="spMin"></span>°</h6>
+                            <h3 class="card-title"><span id="spTemp"></span>°</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">Feels like <span id="spFelt"></span>°</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Dew point <span id="spDewPoint"></span>°</h6>
+                            <h5 class="card-title"><span id="spWeather"></span>, <span id="spDescription"></span></h5>
+                            <span id="spImg"></span>
+                            <h6 class="card-subtitle mb-2 text-muted"><span id="spClouds"></span>% clouds</h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle mb-2 text-muted">Humidity: <span id="spHumidity"></span>%</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Wind speed: <span id="spWind"></span> <span id="spWindUnit"></span></h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Pressure: <span id="spPressure"></span> <span id="spPressureUnit"></span></h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Visibility: <span id="spVisibility"></span> <span id="spVisibilityUnit"></span></h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Sunrise: <span id="spSunrise"></span></h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Sunset: <span id="spSunset"></span></h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </body>
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/main.js"></script>
+</html>
