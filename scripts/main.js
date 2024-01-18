@@ -7,15 +7,19 @@
 // You can get your own API key by signing up for a FREE FOREVER account on https://home.openweathermap.org/users/sign_up
 const APIKEY = "84b3fab687879f825802c0ad57147510";
 const cookiesExpiresDays = 1;
+const debugMode = false;
 
 // Load the weather on the home page
 function home() {
     if (getCookie("latitude") != "" && getCookie("longitude") != "") {
         document.getElementById("container").style.display = "block";
-
+        
+        // let city = await getWeather(0, latitude = getCookie("latitude"), longitude = getCookie("longitude"), mode = 1);
+        // displayWeather(city);
+        
         getWeather(0, latitude = getCookie("latitude"), longitude = getCookie("longitude"), mode = 1).then(
-            response => {
-                displayWeather(response);
+            city => {
+                displayWeather(city);
             }
         );
 
@@ -35,14 +39,20 @@ function search() {
     document.getElementById("container").style.display = "block";
 
     getWeather(cityName, mode = 0).then(
-        response => {
-            displayWeather(response);
+        city => {
+            displayWeather(city);
         }
     );
 }
 
 // Get the weather from the API
 async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit = -1) {
+    // Get the data from the cache
+    let data = sessionStorage.getItem(cityName);
+    if (data) {
+        return data;
+    }
+
     let url = "https://api.openweathermap.org/data/2.5/weather?lang=en&appid=" + APIKEY
     
     if (mode == 0) {
@@ -61,8 +71,16 @@ async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit 
         url += "&units=metric";
     }
 
-    let response = await fetch(url);
-    return await response.text();
+    if (debugMode) {
+        url = "/debug_data.json";
+    }
+
+    let city = await fetch(url);
+    city = await city.text();
+
+    // Cache the data
+    sessionStorage.setItem(cityName, city);
+    return city;
 }
 
 // Display the weather in the container

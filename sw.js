@@ -1,4 +1,4 @@
-const cacheVersion = "v3";
+const cacheVersion = "v4";
 const statiCache = "site-static-" + cacheVersion;
 const dynamicCache = "site-dynamic-" + cacheVersion;
 
@@ -124,7 +124,8 @@ self.addEventListener("fetch", evt => {
     console.log("Fetch event", evt);
     evt.respondWith(
         caches.match(evt.request).then(cacheRes => {
-            return cacheRes || fetch(evt.request).then(fetchRes => {
+            // return cacheRes || fetch(evt.request).then(fetchRes => {
+            return fetch(evt.request).then(fetchRes => {
                 return caches.open(dynamicCache).then(cache => {
                     // cache.put(evt.request.url, fetchRes.c3lone());
                     limitCacheSize(dynamicCache, 50);
