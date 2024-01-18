@@ -49,6 +49,7 @@ function search() {
 async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit = -1) {
     if (unit == -1) {
         unit = Number(getCookie("unit"));
+        updateUnit(unit);
     }
 
     // Get the data from the cache
@@ -142,6 +143,14 @@ function setUnit(unit) {
         setCookie("unit", "1", 364);
     }
     location.reload();
+}
+
+function updateUnit(unit) {
+    if (unit == 0) {
+        document.getElementById("flexRadioDefault1").checked = true;
+    } else if (unit == 1) {
+        document.getElementById("flexRadioDefault2").checked = true;
+    }
 }
 
 // Set a cookie
