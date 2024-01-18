@@ -47,8 +47,12 @@ function search() {
 
 // Get the weather from the API
 async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit = -1) {
+    if (unit == -1) {
+        unit = Number(getCookie("unit"));
+    }
+
     // Get the data from the cache
-    let data = sessionStorage.getItem(cityName);
+    let data = sessionStorage.getItem(unit + "-" + cityName);
     if (data) {
         return data;
     }
@@ -59,10 +63,6 @@ async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit 
         url += "&q=" + cityName;
     } else {
         url += "&lat=" + latitude + "&lon=" + longitude;
-    }
-
-    if (unit == -1) {
-        unit = Number(getCookie("unit"));
     }
     
     if (unit == 0) {
@@ -79,7 +79,7 @@ async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit 
     city = await city.text();
 
     // Cache the data
-    sessionStorage.setItem(cityName, city);
+    sessionStorage.setItem(unit + "-" + cityName, city);
     return city;
 }
 
