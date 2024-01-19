@@ -1,13 +1,15 @@
-const cacheVersion = "v7";
+const cacheVersion = "v8";
 const statiCache = "site-static-" + cacheVersion;
 const dynamicCache = "site-dynamic-" + cacheVersion;
 
 const pages = [
-    "/fallback"
+    "/fallback",
+    "404"
 ];
 
 const pagesFullURL = [
-    "/fallback.html"
+    "/fallback.html",
+    "/404.html"
 ];
 
 const jsS = [
@@ -49,7 +51,9 @@ const imgs = [
     "/img/ms-icon-70x70.png",
     "/img/ms-icon-150x150.png",
     "/img/ms-icon-310x310.png",
-    "/favicon.ico"
+    "/favicon.ico",
+    "/img/fallback.jpg",
+    "/img/404.jpg"
 ];
 const files = [
     "/manifest.json"

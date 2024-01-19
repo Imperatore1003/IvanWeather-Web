@@ -1,0 +1,26 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Contact: mailto:security@ivanbeltrame.com
+Expires: 2025-01-01T00:00:00.000Z
+Encryption: https://www.ivanweather.com/IvanBeltrame.asc
+Preferred-Languages: en, it
+Canonical: https://www.ivanweather.com/.well-known/security.txt
+Hiring: https://www.ivanbeltrame.com/contatti
+-----BEGIN PGP SIGNATURE-----
+
+iQJKBAEBCgA0FiEEXmGXzyQRfqJxiI8MzmLoQwkoWl4FAmWq48QWHGl2YW5AaXZh
+bmJlbHRyYW1lLmNvbQAKCRDOYuhDCShaXoCsD/0ctr87hygITKTRRpcZU0/UOZd2
+rlhrZNuas2mz5NDtzidZJCmCiMRs7xjrCaml5ISJhkfflnKbO/MLKXCGQev4yVN6
+uDiQgMeFHoxMZTYsQ2l6xPh9DWh+PHKf2DwCI7N83pP9pfbhClgRMTip7ATs6aAh
+snFHqlwGeMET5lvJXxw6A8uyV5d1DRD5EAXvswCuQoYgj+pOpNnDmB8lmNbQlvM3
+2qb+UuWgopP0m4wu8B9ZjmNGMD4tzMkzD6KtOIy1QQqO1d2GqTYhETFWGE808cjM
+Ujob+m3VuSDgs98X9jiY/GY8TRtpoFZIfoJyRHLP4duSEih5zQstnbs9qr7NNfEO
+BrbK5RB4VHrzSSKnFyNrg07Y20vs3KkkGJRvMipW9ODJdQetFo/+8QfLIBz6vCaT
+9iDLMwCNSQbwXd2N6rMj4T83zB8Ju295Rmtl54RJhfxsJ25Q7qeSMHm/Nejjvui3
+fqo+anv9kFhChS1W/vwcSuHNVW3mgTN2Cib9fEqknJKOEnt/W0OwjRjZYKM//Qt0
+hhPf1FpM8o41c8BU54sEO/ldAwGvmvbYec5P/iF9ycUSgW2GmbFzvycXlXXNCCGC
+4SV3o6+ni5Mxt8fSaJqLHm4U0JOLXs6A/11Q0TPBlAwejaWcoFFSyh4vg81xpSMR
+gjO0Dyi84rAmB4p4GQ==
+=LzT8
+-----END PGP SIGNATURE-----
