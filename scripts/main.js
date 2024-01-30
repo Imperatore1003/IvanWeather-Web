@@ -34,7 +34,7 @@ function home() {
 function search() {
     cityName = GetParameter("city");
 
-    document.title = "Search " + cityName + " - IvanWeather";
+    document.title = "Search " + capitalizeFirstLetter(cityName) + " - IvanWeather";
     
     document.getElementById("container").style.display = "block";
 
@@ -214,4 +214,9 @@ function GetParameter(parameterName) {
         if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
     }
     return result;
+}
+
+// Capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
