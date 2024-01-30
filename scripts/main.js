@@ -85,7 +85,9 @@ async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit 
 }
 
 // Display the weather in the container
-function displayWeather(city, metric = 0) {
+function displayWeather(city) {
+    unit = Number(getCookie("unit"));
+
     city = JSON.parse(city);
 
     document.getElementById("spCity").innerHTML = city["name"];
@@ -100,15 +102,22 @@ function displayWeather(city, metric = 0) {
     document.getElementById("spClouds").innerHTML = city["clouds"]["all"];
     document.getElementById("spHumidity").innerHTML = city["main"]["humidity"];
 
-    if (metric == 0) {
-        document.getElementById("spVisibility").innerHTML = (city["wind"]["speed"] * 2.237).toFixed(2);
-        document.getElementById("spPressure").innerHTML = (city["main"]["pressure"] / 33.864).toFixed(2);
-        document.getElementById("spWind").innerHTML = (city["visibility"] / 1.609).toFixed(2);
+    if (unit == 0) { // Imperial
+        document.getElementById("spVisibility").innerHTML = (city["visibility"] * 0.0006213712).toFixed(2); // Miles
+        document.getElementById("spPressure").innerHTML = (city["main"]["pressure"] * 0.0295299831).toFixed(2); // Inches of mercury
+        document.getElementById("spWind").innerHTML = city["wind"]["speed"]; // Miles per hour
 
-    } else {
-        document.getElementById("spVisibility").innerHTML = city["visibility"];
-        document.getElementById("spPressure").innerHTML = city["main"]["pressure"];
-        document.getElementById("spWind").innerHTML = city["wind"]["speed"];
+        document.getElementById("spVisibilityUnit").innerHTML = "mi";
+        document.getElementById("spPressureUnit").innerHTML = "in";
+        document.getElementById("spWindUnit").innerHTML = "mph";
+    } else { // Metric
+        document.getElementById("spVisibility").innerHTML = city["visibility"] / 1000; // Km
+        document.getElementById("spPressure").innerHTML = city["main"]["pressure"]; // hPa
+        document.getElementById("spWind").innerHTML = (city["wind"]["speed"] * 3.6).toFixed(2); // Km/h
+
+        document.getElementById("spVisibilityUnit").innerHTML = "km";
+        document.getElementById("spPressureUnit").innerHTML = "hPa";
+        document.getElementById("spWindUnit").innerHTML = "km/h";
     }
 
     document.getElementById("spDewPoint").innerHTML = (city["main"]["temp"] - ((100 - city["main"]["humidity"]) / 5)).toFixed(2);
@@ -120,17 +129,6 @@ function displayWeather(city, metric = 0) {
     let sunset = new Date((parseInt(city["sys"]["sunset"]) + parseInt(city["timezone"])) * 1000);
     formatted = sunset.getUTCHours() + ":" + sunset.getUTCMinutes() + ":" + sunset.getUTCSeconds();
     document.getElementById("spSunset").innerHTML = formatted;
-    
-    if (metric == 0) {
-        document.getElementById("spWindUnit").innerHTML = "mph";
-        document.getElementById("spPressureUnit").innerHTML = "in";
-        document.getElementById("spVisibilityUnit").innerHTML = "mi";
-
-    } else {
-        document.getElementById("spWindUnit").innerHTML = "km/h";
-        document.getElementById("spPressureUnit").innerHTML = "hPa";
-        document.getElementById("spVisibilityUnit").innerHTML = "km";
-    }
 
     document.getElementById("spImg").innerHTML = '<img src="https://openweathermap.org/img/wn/' + city["weather"][0]["icon"] + '.png" alt="Icon" style="width: 50px; height: 50px;">';
 }
