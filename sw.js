@@ -1,4 +1,4 @@
-const cacheVersion = "v8";
+const cacheVersion = "v9";
 const statiCache = "site-static-" + cacheVersion;
 const dynamicCache = "site-dynamic-" + cacheVersion;
 
