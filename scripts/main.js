@@ -146,7 +146,7 @@ function setUnit(unit) {
 function updateUnit(unit) {
     if (unit == 0) {
         document.getElementById("radioFahrenheit").checked = true;
-    } else if (unit == 1) {
+    } else {
         document.getElementById("radioCelsius").checked = true;
     }
 }
