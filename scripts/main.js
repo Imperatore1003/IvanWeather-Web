@@ -182,7 +182,7 @@ function getLocation() {
         document.getElementById("card-body").innerHTML = "<img src='/img/cat-error.jpg' class='w-100'>";
      } else {
         document.getElementById("card-header").innerHTML = "Getting your location...";
-        document.getElementById("card-body").innerHTML = "<img src='/img/loading.gif' class='w-100'>";
+        document.getElementById("card-body").innerHTML = "<img src='/img/loading.gif' class='w-100' style='cursor: wait;'>";
         navigator.geolocation.getCurrentPosition((position) => {
             // Success
             latitude = position.coords.latitude;
