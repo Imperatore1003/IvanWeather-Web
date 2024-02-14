@@ -122,6 +122,15 @@ function displayWeather(city) {
     document.getElementById("spSunset").innerHTML = formatted;
 
     document.getElementById("spImg").innerHTML = "<img src='https://openweathermap.org/img/wn/" + city['weather'][0]['icon'] + ".png' alt='Icon' style='width: 50px; height: 50px;'>";
+
+    let placeholders = Array.from(document.getElementsByClassName("placeholder"));
+    for (let i = 0; i < placeholders.length; i++) {
+        placeholders[i].classList.remove("placeholder");
+        placeholders[i].classList.remove("w-25");
+        placeholders[i].classList.remove("w-50");
+        placeholders[i].classList.remove("w-75");
+        placeholders[i].classList.add("w-100");
+    }
 }
 
 // Set the unit in a cookie
