@@ -53,7 +53,10 @@ const imgs = [
     "/img/ms-icon-310x310.png",
     "/favicon.ico",
     "/img/fallback.jpg",
-    "/img/404.jpg"
+    "/img/404.jpg",
+    "/img/cat-error.jpg",
+    "/img/loading.gif",
+    "OpenWeather-Master-Logo-RGB.png"
 ];
 const files = [
     "/manifest.json"
