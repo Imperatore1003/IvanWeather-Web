@@ -12,11 +12,6 @@ const debugMode = false;
 // Load the weather on the home page
 function home() {
     if (getCookie("latitude") != "" && getCookie("longitude") != "") {
-        document.getElementById("container").style.display = "block";
-        
-        // let city = await getWeather(0, latitude = getCookie("latitude"), longitude = getCookie("longitude"), mode = 1);
-        // displayWeather(city);
-        
         getWeather(0, latitude = getCookie("latitude"), longitude = getCookie("longitude"), mode = 1).then(
             city => {
                 displayWeather(city);
@@ -24,19 +19,15 @@ function home() {
         );
 
     } else {
-        document.getElementById("status").style.display = "block";
-        document.getElementById("container").style.display = "none";
-
         getLocation();
     }
 }
 // Load the weather on the search page 
 function search() {
-    cityName = GetParameter("city");
+    const urlParams = new URLSearchParams(window.location.search);
+    let cityName = urlParams.get('city');
 
-    document.title = "Search " + capitalizeFirstLetter(cityName) + " - IvanWeather";
-    
-    document.getElementById("container").style.display = "block";
+    document.title = "Search " + cityName.charAt(0).toUpperCase() + cityName.slice(1) + " - IvanWeather";
 
     getWeather(cityName, mode = 0).then(
         city => {
@@ -130,7 +121,7 @@ function displayWeather(city) {
     formatted = sunset.getUTCHours() + ":" + sunset.getUTCMinutes() + ":" + sunset.getUTCSeconds();
     document.getElementById("spSunset").innerHTML = formatted;
 
-    document.getElementById("spImg").innerHTML = '<img src="https://openweathermap.org/img/wn/' + city["weather"][0]["icon"] + '.png" alt="Icon" style="width: 50px; height: 50px;">';
+    document.getElementById("spImg").innerHTML = "<img src='https://openweathermap.org/img/wn/" + city['weather'][0]['icon'] + ".png' alt='Icon' style='width: 50px; height: 50px;'>";
 }
 
 // Set the unit in a cookie
@@ -162,10 +153,10 @@ function setCookie(name, value, additionalDays = 0) {
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
+    let ca = decodedCookie.split(";");
     for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
-        while (c.charAt(0) == ' ') {
+        while (c.charAt(0) == " ") {
             c = c.substring(1);
         }
         if (c.indexOf(name) == 0) {
@@ -175,46 +166,31 @@ function getCookie(cname) {
     return "";
 }
 
-// Function to display a message
-function mystatus(status) {
-    document.getElementById('status').innerHTML = "<p>" + status + "</p>";
-}
-// Function to get the location
-function success(position) {
-    latitude = position.coords.latitude;
-    longitude = position.coords.longitude;
-    setCookie("latitude", latitude);
-    setCookie("longitude", longitude);
-    location.reload();
-}
-// Display an error message if the location cannot be retrieved
-function error() {
-    mystatus('Unable to retrieve your location');
-}
-
 // Get the location of the user from the browser
 function getLocation() {
     if (!navigator.geolocation) {
-         mystatus('Geolocation is not supported by your browser');
+        document.getElementById("card-header").innerHTML = "Geolocation is not supported by your browser";
+        document.getElementById("card-body").innerHTML = "<img src='/img/cat-error.jpg' class='w-100'>";
      } else {
-         mystatus("Getting your location...");
-         navigator.geolocation.getCurrentPosition(success, error);
+        document.getElementById("card-header").innerHTML = "Getting your location...";
+        document.getElementById("card-body").innerHTML = "<img src='/img/loading.gif' class='w-100'>";
+        navigator.geolocation.getCurrentPosition((position) => {
+            // Success
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+            setCookie("latitude", latitude);
+            setCookie("longitude", longitude);
+            location.reload();
+        }, (error) => {
+            // Error
+            document.getElementById("card-body").innerHTML = "<img src='/img/cat-error.jpg' class='w-100'>";
+            if (error.code == error.PERMISSION_DENIED) {
+                document.getElementById("card-header").innerHTML = "Permission denied";
+            } else if (error.code == error.POSITION_UNAVAILABLE) {
+                document.getElementById("card-header").innerHTML = "Location unavailable";
+            } else if (error.code == error.TIMEOUT) {
+                document.getElementById("card-header").innerHTML = "Request timed out";
+            }
+        });
      } 
  }
-
-// Get a parameter from the URL
-function GetParameter(parameterName) {
-    var result = null,
-        tmp = [];
-    var items = location.search.substr(1).split("&");
-    for (var index = 0; index < items.length; index++) {
-        tmp = items[index].split("=");
-        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-    }
-    return result;
-}
-
-// Capitalize the first letter of a string
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
