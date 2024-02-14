@@ -145,9 +145,9 @@ function setUnit(unit) {
 
 function updateUnit(unit) {
     if (unit == 0) {
-        document.getElementById("flexRadioDefault1").checked = true;
+        document.getElementById("radioFahrenheit").checked = true;
     } else if (unit == 1) {
-        document.getElementById("flexRadioDefault2").checked = true;
+        document.getElementById("radioCelsius").checked = true;
     }
 }
 
