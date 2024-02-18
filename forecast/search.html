@@ -90,12 +90,13 @@
         <main>
             <h1 class="text-center">Check the weather in your location simply - IvanWeather</h1>
 
-            <div class="mx-5">
-                <h2 class="text-center">Weather today in <span id="cityName"></span></h2>
-
-                <h4 class="text-center border border-bottom-0 mx-5 mb-0 mt-5">Weather data provided by <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeather</a></h4>
-                <div class="accordion mx-5" id="forecastAccordion">
-                    
+            <div class="mx-auto mt-4" id="forecastDisplay">
+                <h2 class="text-center border border-bottom-0 mx-5 mb-0">Weather today in <span id="cityName"></span></h2>
+                <h5 class="text-center border border-bottom-0 border-top-0 mx-5 mb-0">Weather data provided by <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeather</a></h5>
+                <div class="border border-top-0 mx-5">
+                    <div class="accordion" id="forecastAccordion">
+                        
+                    </div>
                 </div>
             </div>
         </main>
