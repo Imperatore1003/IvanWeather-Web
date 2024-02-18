@@ -96,6 +96,7 @@ function displayWeather(data) {
         let sunrise = new Date(data.city.sunrise * 1000);
         let sunset = new Date(data.city.sunset * 1000);
         let dewPoint;
+        let unitTemp = units ? "F" : "C";
 
         let rain = "";
         if (data.list[i].rain) {
@@ -126,22 +127,22 @@ function displayWeather(data) {
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
                     <div class="container m-0 text-center">
-                        <div class="row gy-4">
+                        <div class="row">
                             <div class="col">
-                                <img src="${icon}" alt="Icon" class="me-3 my-auto bg-body rounded-circle">
-                            </div>
-                            <div class="col-3">
-                                <h3 class="m-0 fs-5 my-auto"><b>${dateStamp}</b></h3>
+                                <img src="${icon}" alt="Icon" class="bg-body rounded-circle">
                             </div>
                             <div class="col">
-                                <h3 class="m-0 fs-5 my-auto">${mainDescription}</h3>
+                                <h3 class="fs-5"><b>${dateStamp}</b></h3>
+                            </div>
+                            <div class="col forecastDesktop">
+                                <h3 class="fs-5">${mainDescription}</h3>
                             </div>
                         
-                            <div class="col">
-                                <h3 class="m-0 fs-5 my-auto">${temp}°</h3>
+                            <div class="col forecastDesktop">
+                                <h3 class="fs-5">${temp}° ${unitTemp}</h3>
                             </div>
-                            <div class="col">
-                                <h3 class="m-0 fs-5 my-auto">${tempMax}°/${tempMin}°</h3>
+                            <div class="col forecastDesktop">
+                                <h3 class="fs-5">${tempMax}°/${tempMin}° ${unitTemp}</h3>
                             </div>
                         </div>
                     </div>
@@ -149,9 +150,11 @@ function displayWeather(data) {
             </h2>
             <div id="collapse${i}" class="accordion-collapse collapse" data-bs-parent="#forecastAccordion">
                 <div class="accordion-body">
-                    <h4>${description}</h4>
-                    <h4 class="fs-5">Feels like: ${feelsLike}°</h4>
-                    <h4 class="fs-5">Dew point: ${dewPoint}°</h4>
+                    <h4><b>${description}</b></h4>
+                    <h4 class="forecastMobile">Temperature: <b>${temp}° ${unitTemp}</b></h4>
+                    <h4 class="forecastMobile">${tempMax}°/${tempMin}° ${unitTemp}</h4>
+                    <h4 class="fs-5">Feels like: ${feelsLike}° ${unitTemp}</h4>
+                    <h4 class="fs-5">Dew point: ${dewPoint}° ${unitTemp}</h4>
                     <h4 class="fs-5">Cloudiness: ${cloudiness}%</h4>
                     <h4 class="fs-5">Humidity: ${humidity}%</h4>
                     <h4 class="fs-5">Wind: ${wind} ${windUnit}</h4>

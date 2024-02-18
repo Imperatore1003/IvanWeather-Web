@@ -1,27 +1,26 @@
-/* Small devices */
-@media (max-width: 991.98px) {
+@media (max-width: 650px) {
     #forecastDisplay {
         width: 100%;
     }
-    /* #forecastDisplay * {
-        margin-left: 0px !important;
-        margin-right: 0px !important;
+    .forecastDesktop {
+        display: none;
     }
-    .accordion-item {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+}
+@media (min-width: 650px) {
+    #forecastDisplay {
+        width: 100%;
     }
-
-    .accordion-button {
-        padding-left: 0;
-        padding-right: 0;
+    /* .forecastMobile {
+        display: none;
     } */
 }
-/* Medium devices */
-@media (min-width: 992px) {
+@media (min-width: 1150px) {
     #forecastDisplay {
         width: 50%;
     }
+    /* .forecastMobile {
+        display: none;
+    } */
 }
 
 .weather {
