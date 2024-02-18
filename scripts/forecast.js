@@ -128,7 +128,7 @@ function displayWeather(data) {
                     <div class="container m-0 text-center">
                         <div class="row gy-4">
                             <div class="col">
-                                <img src="${icon}" alt="Icon" class="me-3 my-auto">
+                                <img src="${icon}" alt="Icon" class="me-3 my-auto bg-body rounded-circle">
                             </div>
                             <div class="col-3">
                                 <h3 class="m-0 fs-5 my-auto"><b>${dateStamp}</b></h3>
