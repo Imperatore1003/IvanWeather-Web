@@ -96,7 +96,7 @@ function displayWeather(data) {
         let sunrise = new Date(data.city.sunrise * 1000);
         let sunset = new Date(data.city.sunset * 1000);
         let dewPoint;
-        let unitTemp = units ? "F" : "C";
+        let unitTemp = units ? "C" : "F";
 
         let rain = "";
         if (data.list[i].rain) {
