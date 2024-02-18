@@ -9,6 +9,9 @@ const APIKEY = "84b3fab687879f825802c0ad57147510";
 const cookiesExpiresDays = 1;
 const debugMode = false;
 
+const toastLiveExample = document.getElementById('liveToastForecast');
+const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample).show();
+
 // Load the weather on the home page
 function home() {
     if (getCookie("latitude") != "" && getCookie("longitude") != "") {
@@ -66,7 +69,7 @@ async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit 
     }
 
     if (debugMode) {
-        url = "/debug_data.json";
+        url = "/debug/main.json";
     }
 
     let city = await fetch(url);

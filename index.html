@@ -92,6 +92,21 @@
         <main>
             <h1 class="text-center">Check the weather in your location simply - IvanWeather</h1>
 
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div id="liveToastForecast" class="toast text-bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="8000">
+                    <div class="toast-header">
+                        <img src="/img/IvanWeather.png" class="rounded me-2" alt="Logo" width="40">
+                        <strong class="me-auto">Forecast</strong>
+                        <small>Now</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        The forecast is now available!
+                        <a class="btn btn-primary" href="/forecast/" role="button">Try it</a>
+                    </div>
+                </div>
+            </div>
+
             <div class="container placeholder-glow" id="container">
                 <div class="weather card border-dark text-center text-bg-light mb-3" style="min-width: 9.125rem; max-width: 18rem;">
                     <ul class="list-group list-group-flush">
