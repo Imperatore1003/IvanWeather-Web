@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /forecast/
 Disallow: /img/
 
 Sitemap: https://www.ivanweather.com/sitemap.xml

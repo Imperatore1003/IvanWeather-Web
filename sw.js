@@ -1,4 +1,4 @@
-const cacheVersion = "v14";
+const cacheVersion = "v16";
 const statiCache = "site-static-" + cacheVersion;
 const dynamicCache = "site-dynamic-" + cacheVersion;
 
@@ -14,7 +14,8 @@ const pagesFullURL = [
 
 const jsS = [
     "/js/app.js",
-    "/js/main.js"
+    "/js/main.js",
+    "/js/forecast.js"
 ]
 
 const cssS = [
@@ -56,7 +57,7 @@ const imgs = [
     "/img/404.jpg",
     "/img/cat-error.jpg",
     "/img/loading.gif",
-    "OpenWeather-Master-Logo-RGB.png"
+    "/img/OpenWeather-Master-Logo-RGB.png"
 ];
 const files = [
     "/manifest.json"
@@ -64,7 +65,6 @@ const files = [
 const thirdParty = [
     "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js",
     "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css",
-
     "https://openweathermap.org/img/wn/01d.png",
     "https://openweathermap.org/img/wn/01n.png",
     "https://openweathermap.org/img/wn/02d.png",

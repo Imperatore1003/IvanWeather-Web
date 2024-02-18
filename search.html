@@ -40,8 +40,6 @@
     <meta property="og:description" content="IvanWeather is a weather service that returns the local wheather of a given city."/>
 
     <link rel="stylesheet" href="/style.css">
-    
-    <meta name="google-site-verification" content="yCJPO9bmJl1xND72DNVgzUr4hFogTQbTNT4qf0HrULo"/>
 </head>
     <body>
         <nav class="navbar navbar-expand-lg bg-light">
@@ -53,7 +51,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            <a class="nav-link active" aria-current="page" href="#" rel="nofollow">Current</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/forecast/" id="searchForecastLink">Forecast</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="unitsNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -79,7 +80,7 @@
                     </ul>
 
                     <form class="d-flex" role="search" method="get" action="/search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="city">
+                        <input class="form-control me-2" type="search" placeholder="Search (current)" aria-label="Search" name="city">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>

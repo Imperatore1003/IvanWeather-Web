@@ -28,6 +28,8 @@ function search() {
     let cityName = urlParams.get('city');
 
     document.title = "Search " + cityName.charAt(0).toUpperCase() + cityName.slice(1) + " - IvanWeather";
+    document.getElementById("searchForecastLink").setAttribute("href", "/forecast/search?city=" + cityName);
+
 
     getWeather(cityName, mode = 0).then(
         city => {
@@ -88,8 +90,7 @@ function displayWeather(city) {
     document.getElementById("spMin").innerHTML = city["main"]["temp_min"];
     document.getElementById("spTemp").innerHTML = city["main"]["temp"];
     document.getElementById("spFelt").innerHTML = city["main"]["feels_like"];
-    document.getElementById("spWeather").innerHTML = city["weather"][0]["main"];
-    document.getElementById("spDescription").innerHTML = city["weather"][0]["description"];
+    document.getElementById("spDescription").innerHTML = city["weather"][0]["description"].charAt(0).toUpperCase() + city["weather"][0]["description"].slice(1);
     document.getElementById("spClouds").innerHTML = city["clouds"]["all"];
     document.getElementById("spHumidity").innerHTML = city["main"]["humidity"];
 
