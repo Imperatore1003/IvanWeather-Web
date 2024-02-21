@@ -10,11 +10,23 @@ const cookiesExpiresDays = 1;
 const debugMode = false;
 
 function forecast() {
-    getWeather(cityName = 0,latitude = getCookie("latitude"), longitude = getCookie("longitude")).then(
-        data => {
-            displayWeather(data);
-        }
-    );
+    if (getCookie("error")) {
+        getWeather("New York", mode = 0).then(
+            city => {
+                displayWeather(city);
+            }
+        );
+
+    } else if (getCookie("latitude") != "" && getCookie("longitude") != "") {
+        getWeather(0, latitude = getCookie("latitude"), longitude = getCookie("longitude"), mode = 1).then(
+            city => {
+                displayWeather(city);
+            }
+        );
+
+    } else {
+        getLocation();
+    }
 }
 
 function search() {
@@ -170,6 +182,7 @@ function displayWeather(data) {
         </div>
         `
     }
+    document.getElementById("loadingForecastGif").style.display = "none";
 }
 
 // Set the unit in a cookie
@@ -216,4 +229,30 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+// Get the location of the user from the browser
+function getLocation() {
+    if (!navigator.geolocation) {
+        setCookie("error", "not_supported");
+        location.reload();
+    } else {
+        navigator.geolocation.getCurrentPosition((position) => {
+            // Success
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+            setCookie("latitude", latitude);
+            setCookie("longitude", longitude);
+            location.reload();
+        }, (error) => {
+            if (error.code == error.PERMISSION_DENIED) {
+                setCookie("error", "denied");
+            } else if (error.code == error.POSITION_UNAVAILABLE) {
+                setCookie("error", "unavailable");
+            } else if (error.code == error.TIMEOUT) {
+                setCookie("error", "timed_out");
+            }
+            location.reload();
+        });
+    }
 }

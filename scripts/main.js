@@ -14,7 +14,30 @@ const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample).sho
 
 // Load the weather on the home page
 function home() {
-    if (getCookie("latitude") != "" && getCookie("longitude") != "") {
+    let error = getCookie("error");
+    if (error != "") {
+        switch (error) {
+            case "not_supported":
+                document.getElementById("card-header").innerHTML = "Geolocation is not supported";
+                break;
+            case "denied":
+                document.getElementById("card-header").innerHTML = "Geolocation has been denied";
+                break;
+            case "unavailable":
+                document.getElementById("card-header").innerHTML = "Geolocation is unavailable";
+                break;
+            case "timed_out":
+                document.getElementById("card-header").innerHTML = "Geolocation has timed out";
+                break;
+        }
+
+        getWeather("New York", mode = 0).then(
+            city => {
+                displayWeather(city);
+            }
+        );
+
+    } else if (getCookie("latitude") != "" && getCookie("longitude") != "") {
         getWeather(0, latitude = getCookie("latitude"), longitude = getCookie("longitude"), mode = 1).then(
             city => {
                 displayWeather(city);
@@ -32,7 +55,6 @@ function search() {
 
     document.title = "Search " + cityName.charAt(0).toUpperCase() + cityName.slice(1) + " - IvanWeather";
     document.getElementById("searchForecastLink").setAttribute("href", "/forecast/search?city=" + cityName);
-
 
     getWeather(cityName, mode = 0).then(
         city => {
@@ -82,17 +104,18 @@ async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit 
 
 // Display the weather in the container
 function displayWeather(city) {
-    unit = Number(getCookie("unit"));
+    let unit = Number(getCookie("unit"));
+
+    let tempUnit = unit == 0 ? " °F" : " °C";
 
     city = JSON.parse(city);
 
     document.getElementById("spCity").innerHTML = city["name"];
     document.getElementById("spCountry").innerHTML = city["sys"]["country"];
-    document.getElementById("spMax").innerHTML = city[""];
     document.getElementById("spMax").innerHTML = city["main"]["temp_max"];
-    document.getElementById("spMin").innerHTML = city["main"]["temp_min"];
-    document.getElementById("spTemp").innerHTML = city["main"]["temp"];
-    document.getElementById("spFelt").innerHTML = city["main"]["feels_like"];
+    document.getElementById("spMin").innerHTML = city["main"]["temp_min"] + tempUnit;
+    document.getElementById("spTemp").innerHTML = city["main"]["temp"] + tempUnit;
+    document.getElementById("spFelt").innerHTML = city["main"]["feels_like"] + tempUnit;
     document.getElementById("spDescription").innerHTML = city["weather"][0]["description"].charAt(0).toUpperCase() + city["weather"][0]["description"].slice(1);
     document.getElementById("spClouds").innerHTML = city["clouds"]["all"];
     document.getElementById("spHumidity").innerHTML = city["main"]["humidity"];
@@ -115,7 +138,7 @@ function displayWeather(city) {
         document.getElementById("spWindUnit").innerHTML = "km/h";
     }
 
-    document.getElementById("spDewPoint").innerHTML = (city["main"]["temp"] - ((100 - city["main"]["humidity"]) / 5)).toFixed(2);
+    document.getElementById("spDewPoint").innerHTML = (city["main"]["temp"] - ((100 - city["main"]["humidity"]) / 5)).toFixed(2) + tempUnit;
 
     let sunrise = new Date((parseInt(city["sys"]["sunrise"]) + parseInt(city["timezone"])) * 1000);
     let formatted = sunrise.getUTCHours() + ":" + sunrise.getUTCMinutes() + ":" + sunrise.getUTCSeconds();
@@ -182,9 +205,9 @@ function getCookie(cname) {
 // Get the location of the user from the browser
 function getLocation() {
     if (!navigator.geolocation) {
-        document.getElementById("card-header").innerHTML = "Geolocation is not supported by your browser";
-        document.getElementById("card-body").innerHTML = "<img src='/img/cat-error.jpg' class='w-100'>";
-     } else {
+        setCookie("error", "not_supported");
+        location.reload();
+    } else {
         document.getElementById("card-header").innerHTML = "Getting your location...";
         document.getElementById("card-body").innerHTML = "<img src='/img/loading.gif' class='w-100' style='cursor: wait;'>";
         navigator.geolocation.getCurrentPosition((position) => {
@@ -195,15 +218,14 @@ function getLocation() {
             setCookie("longitude", longitude);
             location.reload();
         }, (error) => {
-            // Error
-            document.getElementById("card-body").innerHTML = "<img src='/img/cat-error.jpg' class='w-100'>";
             if (error.code == error.PERMISSION_DENIED) {
-                document.getElementById("card-header").innerHTML = "Permission denied";
+                setCookie("error", "denied");
             } else if (error.code == error.POSITION_UNAVAILABLE) {
-                document.getElementById("card-header").innerHTML = "Location unavailable";
+                setCookie("error", "unavailable");
             } else if (error.code == error.TIMEOUT) {
-                document.getElementById("card-header").innerHTML = "Request timed out";
+                setCookie("error", "timed_out");
             }
+            location.reload();
         });
-     } 
- }
+    }
+}

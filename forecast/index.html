@@ -94,6 +94,15 @@
                 <h2 class="text-center border border-bottom-0 mx-5 mb-0">Weather today in <span id="cityName"></span></h2>
                 <h5 class="text-center border border-bottom-0 border-top-0 mx-5 mb-0">Weather data provided by <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeather</a></h5>
                 <div class="border border-top-0 mx-5">
+                    <div class="mx-auto card border-dark text-center text-bg-light mb-3 mt-3" id="loadingForecastGif" style="min-width: 9.125rem; max-width: 18rem;">
+                        <ul class="list-group list-group-flush">
+                            <div class="card-header" id="card-header">Loading weather...</div>
+                            <div id="card-body">
+                                <img src='/img/loading.gif' class='w-100' style='cursor: wait;'>
+                            </div>
+                        </ul>
+                    </div>
+
                     <div class="accordion" id="forecastAccordion">
                         
                     </div>
