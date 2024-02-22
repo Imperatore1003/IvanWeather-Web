@@ -122,7 +122,7 @@ function displayWeather(data) {
         
         if (units) { // Metric
             dateStamp = weekDays[date.getDay()] + " " + date.getDate() + " - " + date.getHours() + ":00";
-            wind = (wind * 3.6).toFixed(2); // CHECKpop
+            wind = (wind * 3.6).toFixed(2);
             sunrise = sunrise.toLocaleTimeString('en-US', { hour: 'numeric', hour12: false, minute: 'numeric'}) + " AM";
             sunset = sunset.toLocaleTimeString('en-US', { hour: 'numeric', hour12: false, minute: 'numeric'}) + " PM";
             dewPoint = (temp - ((100 - humidity) / 5)).toFixed(1);
