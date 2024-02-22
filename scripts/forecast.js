@@ -11,7 +11,7 @@ const debugMode = false;
 
 function forecast() {
     if (getCookie("error")) {
-        getWeather("New York", mode = 0).then(
+        getWeather("London", mode = 0).then(
             city => {
                 displayWeather(city);
             }
@@ -109,6 +109,7 @@ function displayWeather(data) {
         let sunset = new Date(data.city.sunset * 1000);
         let dewPoint;
         let unitTemp = units ? "C" : "F";
+        let windDegrees = data.list[i]["wind"]["deg"];
 
         let rain = "";
         if (data.list[i].rain) {
@@ -169,7 +170,12 @@ function displayWeather(data) {
                     <h4 class="fs-5">Dew point: ${dewPoint}° ${unitTemp}</h4>
                     <h4 class="fs-5">Cloudiness: ${cloudiness}%</h4>
                     <h4 class="fs-5">Humidity: ${humidity}%</h4>
-                    <h4 class="fs-5">Wind: ${wind} ${windUnit}</h4>
+                    <h4 class="fs-5">Wind: ${wind} ${windUnit}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up ms-2" viewBox="0 0 16 16" id="windArrow-${i}">
+                            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                        </svg>
+                        ${windDegrees}°
+                    </h4>
                     ${rain}
                     <h4 class="fs-5">Probability of precipitation: ${pop}%</h4>
                     ${snow}
@@ -181,6 +187,12 @@ function displayWeather(data) {
             </div>
         </div>
         `
+
+        let windArrow = document.getElementById("windArrow-" + i);
+        windArrow.style.mozTransform    = 'rotate('+windDegrees+'deg)';
+        windArrow.style.msTransform     = 'rotate('+windDegrees+'deg)';
+        windArrow.style.oTransform      = 'rotate('+windDegrees+'deg)';
+        windArrow.style.transform       = 'rotate('+windDegrees+'deg)';
     }
     document.getElementById("loadingForecastGif").style.display = "none";
 }

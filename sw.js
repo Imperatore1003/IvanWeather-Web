@@ -1,4 +1,4 @@
-const cacheVersion = "v23";
+const cacheVersion = "v24";
 const statiCache = "site-static-" + cacheVersion;
 const dynamicCache = "site-dynamic-" + cacheVersion;
 
@@ -65,6 +65,7 @@ const files = [
 const thirdParty = [
     "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js",
     "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css",
+    "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css",
     "https://openweathermap.org/img/wn/01d.png",
     "https://openweathermap.org/img/wn/01n.png",
     "https://openweathermap.org/img/wn/02d.png",

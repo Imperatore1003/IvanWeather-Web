@@ -31,7 +31,7 @@ function home() {
                 break;
         }
 
-        getWeather("New York", mode = 0).then(
+        getWeather("London", mode = 0).then(
             city => {
                 displayWeather(city);
             }
@@ -73,7 +73,7 @@ async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit 
     // Get the data from the cache
     let data = sessionStorage.getItem(unit + "-" + cityName);
     if (data) {
-        return data;
+        return JSON.parse(data);
     }
 
     let url = "https://api.openweathermap.org/data/2.5/weather?lang=en&appid=" + APIKEY
@@ -94,61 +94,77 @@ async function getWeather(cityName, latitude = 0, longitude = 0, mode = 0, unit 
         url = "/debug/main.json";
     }
 
-    let city = await fetch(url);
-    city = await city.text();
+    data = await fetch(url);
+    data = await data.text();
 
     // Cache the data
-    sessionStorage.setItem(unit + "-" + cityName, city);
-    return city;
+    sessionStorage.setItem(unit + "-" + cityName, data);
+    return JSON.parse(data);
 }
 
 // Display the weather in the container
-function displayWeather(city) {
+function displayWeather(data) {
     let unit = Number(getCookie("unit"));
 
     let tempUnit = unit == 0 ? " °F" : " °C";
 
-    city = JSON.parse(city);
+    document.getElementById("spCity").innerHTML = data.name;
+    document.getElementById("spCountry").innerHTML = data.sys.country;
+    document.getElementById("spMax").innerHTML = data.main.temp_max;
+    document.getElementById("spMin").innerHTML = data.main.temp_min + tempUnit;
+    document.getElementById("spTemp").innerHTML = data.main.temp + tempUnit;
+    document.getElementById("spFelt").innerHTML = data.main.feels_like + tempUnit;
+    document.getElementById("spDescription").innerHTML = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
+    document.getElementById("spClouds").innerHTML = data.clouds.all;
+    document.getElementById("spHumidity").innerHTML = data.main.humidity;
+    let windDegrees = data["wind"]["deg"];
+    document.getElementById("windDegrees").innerHTML = windDegrees + "°";
+    let windArrow = document.getElementById("windArrow");
+    windArrow.style.mozTransform    = 'rotate('+windDegrees+'deg)';
+    windArrow.style.msTransform     = 'rotate('+windDegrees+'deg)';
+    windArrow.style.oTransform      = 'rotate('+windDegrees+'deg)';
+    windArrow.style.transform       = 'rotate('+windDegrees+'deg)';
 
-    document.getElementById("spCity").innerHTML = city["name"];
-    document.getElementById("spCountry").innerHTML = city["sys"]["country"];
-    document.getElementById("spMax").innerHTML = city["main"]["temp_max"];
-    document.getElementById("spMin").innerHTML = city["main"]["temp_min"] + tempUnit;
-    document.getElementById("spTemp").innerHTML = city["main"]["temp"] + tempUnit;
-    document.getElementById("spFelt").innerHTML = city["main"]["feels_like"] + tempUnit;
-    document.getElementById("spDescription").innerHTML = city["weather"][0]["description"].charAt(0).toUpperCase() + city["weather"][0]["description"].slice(1);
-    document.getElementById("spClouds").innerHTML = city["clouds"]["all"];
-    document.getElementById("spHumidity").innerHTML = city["main"]["humidity"];
+    if (data.rain) {
+        let spRain = document.getElementById("spRain");
+        spRain.innerHTML = data.rain["1h"];
+        spRain.parentNode.style.display = "block";
+    }
+    if (data.snow) {
+        let spSnow = document.getElementById("spSnow");
+        spSnow.innerHTML = data.snow["1h"];
+        spSnow.parentNode.style.display = "block";
+    }
 
     if (unit == 0) { // Imperial
-        document.getElementById("spVisibility").innerHTML = (city["visibility"] * 0.0006213712).toFixed(2); // Miles
-        document.getElementById("spPressure").innerHTML = (city["main"]["pressure"] * 0.0295299831).toFixed(2); // Inches of mercury
-        document.getElementById("spWind").innerHTML = city["wind"]["speed"]; // Miles per hour
+        document.getElementById("spVisibility").innerHTML = (data.visibility * 0.0006213712).toFixed(2); // Miles
+        document.getElementById("spPressure").innerHTML = (data.main.pressure * 0.0295299831).toFixed(2); // Inches of mercury
+        document.getElementById("spWind").innerHTML = data.wind.speed; // Miles per hour
 
         document.getElementById("spVisibilityUnit").innerHTML = "mi";
         document.getElementById("spPressureUnit").innerHTML = "in";
         document.getElementById("spWindUnit").innerHTML = "mph";
     } else { // Metric
-        document.getElementById("spVisibility").innerHTML = city["visibility"] / 1000; // Km
-        document.getElementById("spPressure").innerHTML = city["main"]["pressure"]; // hPa
-        document.getElementById("spWind").innerHTML = (city["wind"]["speed"] * 3.6).toFixed(2); // Km/h
+        document.getElementById("spVisibility").innerHTML = data.visibility / 1000; // Km
+        document.getElementById("spPressure").innerHTML = data.main.pressure; // hPa
+        document.getElementById("spWind").innerHTML = (data.wind.speed * 3.6).toFixed(2); // Km/h
 
         document.getElementById("spVisibilityUnit").innerHTML = "km";
         document.getElementById("spPressureUnit").innerHTML = "hPa";
         document.getElementById("spWindUnit").innerHTML = "km/h";
     }
 
-    document.getElementById("spDewPoint").innerHTML = (city["main"]["temp"] - ((100 - city["main"]["humidity"]) / 5)).toFixed(2) + tempUnit;
+    document.getElementById("spDewPoint").innerHTML = (data.main.temp - ((100 - data.main.humidity) / 5)).toFixed(1) + tempUnit;
 
-    let sunrise = new Date((parseInt(city["sys"]["sunrise"]) + parseInt(city["timezone"])) * 1000);
+    let sunrise = new Date((parseInt(data.sys.sunrise) + parseInt(data.timezone)) * 1000);
     let formatted = sunrise.getUTCHours() + ":" + sunrise.getUTCMinutes() + ":" + sunrise.getUTCSeconds();
     document.getElementById("spSunrise").innerHTML = formatted;
 
-    let sunset = new Date((parseInt(city["sys"]["sunset"]) + parseInt(city["timezone"])) * 1000);
+    let sunset = new Date((parseInt(data.sys.sunset) + parseInt(data.timezone)) * 1000);
     formatted = sunset.getUTCHours() + ":" + sunset.getUTCMinutes() + ":" + sunset.getUTCSeconds();
     document.getElementById("spSunset").innerHTML = formatted;
 
-    document.getElementById("spImg").innerHTML = "<img src='https://openweathermap.org/img/wn/" + city['weather'][0]['icon'] + ".png' alt='Icon' style='width: 50px; height: 50px;'>";
+    document.getElementById("spImg").innerHTML = "<img src='https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png' alt='Icon' style='width: 50px; height: 50px;'>";
 
     let placeholders = Array.from(document.getElementsByClassName("placeholder"));
     for (let i = 0; i < placeholders.length; i++) {
