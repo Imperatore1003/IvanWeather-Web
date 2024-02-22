@@ -107,6 +107,10 @@ function displayWeather(data) {
     let unit = Number(getCookie("unit"));
 
     let tempUnit = unit == 0 ? " °F" : " °C";
+    let windDegrees = data["wind"]["deg"];
+    let windArrow = document.getElementById("windArrow");
+    let sunrise = new Date(data.sys.sunrise * 1000);
+    let sunset = new Date(data.sys.sunset * 1000);
 
     document.getElementById("spCity").innerHTML = data.name;
     document.getElementById("spCountry").innerHTML = data.sys.country;
@@ -117,9 +121,7 @@ function displayWeather(data) {
     document.getElementById("spDescription").innerHTML = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
     document.getElementById("spClouds").innerHTML = data.clouds.all;
     document.getElementById("spHumidity").innerHTML = data.main.humidity;
-    let windDegrees = data["wind"]["deg"];
     document.getElementById("windDegrees").innerHTML = windDegrees + "°";
-    let windArrow = document.getElementById("windArrow");
     windArrow.style.mozTransform    = 'rotate('+windDegrees+'deg)';
     windArrow.style.msTransform     = 'rotate('+windDegrees+'deg)';
     windArrow.style.oTransform      = 'rotate('+windDegrees+'deg)';
@@ -144,6 +146,9 @@ function displayWeather(data) {
         document.getElementById("spVisibilityUnit").innerHTML = "mi";
         document.getElementById("spPressureUnit").innerHTML = "in";
         document.getElementById("spWindUnit").innerHTML = "mph";
+
+        sunrise = sunrise.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric'});
+        sunset = sunset.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric'});
     } else { // Metric
         document.getElementById("spVisibility").innerHTML = data.visibility / 1000; // Km
         document.getElementById("spPressure").innerHTML = data.main.pressure; // hPa
@@ -152,17 +157,22 @@ function displayWeather(data) {
         document.getElementById("spVisibilityUnit").innerHTML = "km";
         document.getElementById("spPressureUnit").innerHTML = "hPa";
         document.getElementById("spWindUnit").innerHTML = "km/h";
+
+        sunrise = sunrise.toLocaleTimeString('en-US', { hour: 'numeric', hour12: false, minute: 'numeric'}) + " AM";
+        sunset = sunset.toLocaleTimeString('en-US', { hour: 'numeric', hour12: false, minute: 'numeric'}) + " PM";
     }
 
     document.getElementById("spDewPoint").innerHTML = (data.main.temp - ((100 - data.main.humidity) / 5)).toFixed(1) + tempUnit;
+    document.getElementById("spSunrise").innerHTML = sunrise;
+    document.getElementById("spSunset").innerHTML = sunset;
 
-    let sunrise = new Date((parseInt(data.sys.sunrise) + parseInt(data.timezone)) * 1000);
-    let formatted = sunrise.getUTCHours() + ":" + sunrise.getUTCMinutes() + ":" + sunrise.getUTCSeconds();
-    document.getElementById("spSunrise").innerHTML = formatted;
+    // let sunrise = new Date((parseInt(data.sys.sunrise) + parseInt(data.timezone)) * 1000);
+    // let formatted = sunrise.getUTCHours() + ":" + sunrise.getUTCMinutes() + ":" + sunrise.getUTCSeconds();
+    // document.getElementById("spSunrise").innerHTML = formatted;
 
-    let sunset = new Date((parseInt(data.sys.sunset) + parseInt(data.timezone)) * 1000);
-    formatted = sunset.getUTCHours() + ":" + sunset.getUTCMinutes() + ":" + sunset.getUTCSeconds();
-    document.getElementById("spSunset").innerHTML = formatted;
+    // let sunset = new Date((parseInt(data.sys.sunset) + parseInt(data.timezone)) * 1000);
+    // formatted = sunset.getUTCHours() + ":" + sunset.getUTCMinutes() + ":" + sunset.getUTCSeconds();
+    // document.getElementById("spSunset").innerHTML = formatted;
 
     document.getElementById("spImg").innerHTML = "<img src='https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png' alt='Icon' style='width: 50px; height: 50px;'>";
 
