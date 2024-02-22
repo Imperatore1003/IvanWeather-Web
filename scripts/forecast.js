@@ -101,7 +101,7 @@ function displayWeather(data) {
         let humidity = data.list[i].main.humidity;
         let wind = data.list[i].wind.speed;
         let windUnit = units ? "Km/s" : "mph";
-        let pop = data.list[i].pop * 100;
+        let pop = Math.round(data.list[i].pop * 100);
         let visibility = data.list[i].visibility / 1000;
         let visibilityUnit = units ? "Km" : "mi";
         let cloudiness = data.list[i].clouds.all;
