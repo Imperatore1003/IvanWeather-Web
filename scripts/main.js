@@ -31,16 +31,32 @@ function home() {
                 break;
         }
 
-        getWeather("London", mode = 0).then(
-            city => {
-                displayWeather(city);
+        getWeather("London, GB", mode = 0).then(
+            data => {
+                displayWeather(data);
             }
         );
 
     } else if (getCookie("latitude") != "" && getCookie("longitude") != "") {
         getWeather(0, latitude = getCookie("latitude"), longitude = getCookie("longitude"), mode = 1).then(
-            city => {
-                displayWeather(city);
+            data => {
+                if (data.cod == "404") {
+                    document.getElementById("card-header").innerHTML = "City not found";
+                    document.getElementById("card-body").innerHTML = `
+                    <li class="list-group-item d-flex flex-column justify-content-center">
+                        <h5 class="card-title w-100 mx-auto">${cityName}</h5>
+                    </li>
+                    <li class="list-group-item d-flex flex-column justify-content-center">
+                        <h5 class="card-title mx-auto w-100">Cannot find the city you searched for</h5>
+                        <h6 class="card-title mx-auto w-100">Make sure you typed it rigth or try adding the country code after a comma</h6>
+                    </li>
+                    <li class="card-footer d-flex justify-content-center">
+                        <h6 class="card-subtitle my-1 text-muted w-100 mx-auto">Weather data provided by <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeather</a></h6>
+                        <img src="/img/OpenWeather-Master-Logo-RGB.png" alt="OpenWeather logo" class="w-50">
+                    </li>`;
+                } else {
+                    displayWeather(data);
+                }
             }
         );
 
@@ -57,8 +73,24 @@ function search() {
     document.getElementById("searchForecastLink").setAttribute("href", "/forecast/search?city=" + cityName);
 
     getWeather(cityName, mode = 0).then(
-        city => {
-            displayWeather(city);
+        data => {
+            if (data.cod == "404") {
+                document.getElementById("card-header").innerHTML = "City not found";
+                document.getElementById("card-body").innerHTML = `
+                <li class="list-group-item d-flex flex-column justify-content-center">
+                    <h5 class="card-title w-100 mx-auto">${cityName}</h5>
+                </li>
+                <li class="list-group-item d-flex flex-column justify-content-center">
+                    <h5 class="card-title mx-auto w-100">Cannot find the city you searched for</h5>
+                    <h6 class="card-title mx-auto w-100">Make sure you typed it rigth or try adding the country code after a comma</h6>
+                </li>
+                <li class="card-footer d-flex justify-content-center">
+                    <h6 class="card-subtitle my-1 text-muted w-100 mx-auto">Weather data provided by <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeather</a></h6>
+                    <img src="/img/OpenWeather-Master-Logo-RGB.png" alt="OpenWeather logo" class="w-50">
+                </li>`;
+            } else {
+                displayWeather(data);
+            }
         }
     );
 }
