@@ -233,7 +233,7 @@ function setCookie(name, value, additionalDays = 0) {
     const d = new Date();
     d.setTime(d.getTime() + ((cookiesExpiresDays + additionalDays) * 24 * 60 * 60 * 1000));
     let expires = "expires="+d.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    document.cookie = name + "=" + value + ";" + expires + ";path=/; Secure; SameSite=Strict;";
 }
 // Get a cookie
 function getCookie(cname) {
