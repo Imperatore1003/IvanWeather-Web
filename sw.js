@@ -1,4 +1,4 @@
-const cacheVersion = "v29";
+const cacheVersion = "v30";
 const statiCache = "site-static-" + cacheVersion;
 const dynamicCache = "site-dynamic-" + cacheVersion;
 
@@ -23,36 +23,17 @@ const cssS = [
 ];
 
 const imgs = [
-    "/img/android-icon-36x36.png",
-    "/img/android-icon-48x48.png",
-    "/img/android-icon-72x72.png",
-    "/img/android-icon-96x96.png",
-    "/img/android-icon-144x144.png",
-    "/img/android-icon-192x192.png",
-    "/img/android-icon-512x512.png",
-    "/img/android-icon-640x640.png",
-    "/img/apple-icon-57x57.png",
-    "/img/apple-icon-60x60.png",
-    "/img/apple-icon-72x72.png",
-    "/img/apple-icon-76x76.png",
-    "/img/apple-icon-114x114.png",
-    "/img/apple-icon-120x120.png",
-    "/img/apple-icon-144x144.png",
-    "/img/apple-icon-152x152.png",
-    "/img/apple-icon-180x180.png",
-    "/img/apple-icon-precomposed.png",
-    "/img/apple-icon.png",
-    "/img/favicon-16x16.png",
-    "/img/favicon-32x32.png",
-    "/img/favicon-96x96.png",
-    "/img/favicon.ico",
+    "/img/icon38.png",
+    "/img/icon48.png",
+    "/img/icon72.png",
+    "/img/icon96.png",
+    "/img/icon144.png",
+    "/img/icon192.png",
+    "/img/icon512.png",
+    "/img/icon640.png",
+    "/img/favicon96.png",
     "/img/IvanWeather.png",
     "/img/IvanWeather.svg",
-    "/img/ms-icon-144x144.png",
-    "/img/ms-icon-70x70.png",
-    "/img/ms-icon-150x150.png",
-    "/img/ms-icon-310x310.png",
-    "/favicon.ico",
     "/img/fallback.jpg",
     "/img/404.jpg",
     "/img/cat-error.jpg",
