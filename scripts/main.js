@@ -198,14 +198,6 @@ function displayWeather(data) {
     document.getElementById("spSunrise").innerHTML = sunrise;
     document.getElementById("spSunset").innerHTML = sunset;
 
-    // let sunrise = new Date((parseInt(data.sys.sunrise) + parseInt(data.timezone)) * 1000);
-    // let formatted = sunrise.getUTCHours() + ":" + sunrise.getUTCMinutes() + ":" + sunrise.getUTCSeconds();
-    // document.getElementById("spSunrise").innerHTML = formatted;
-
-    // let sunset = new Date((parseInt(data.sys.sunset) + parseInt(data.timezone)) * 1000);
-    // formatted = sunset.getUTCHours() + ":" + sunset.getUTCMinutes() + ":" + sunset.getUTCSeconds();
-    // document.getElementById("spSunset").innerHTML = formatted;
-
     document.getElementById("spImg").innerHTML = "<img src='https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png' alt='Icon' style='width: 50px; height: 50px;'>";
 
     let placeholders = Array.from(document.getElementsByClassName("placeholder"));
