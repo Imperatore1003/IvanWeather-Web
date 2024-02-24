@@ -22,3 +22,7 @@
         display: none;
     } */
 }
+
+.accordion-item:first-of-type {
+    border-radius: 0;
+}
