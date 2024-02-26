@@ -221,6 +221,7 @@ function displayWeather(data) {
         `
 
         let windArrow = document.getElementById("windArrow-" + i);
+        windDegrees = windDegrees + 180; // The arrow is pointing to the opposite direction because of the meteorological convention
         windArrow.style.mozTransform    = 'rotate('+windDegrees+'deg)';
         windArrow.style.msTransform     = 'rotate('+windDegrees+'deg)';
         windArrow.style.oTransform      = 'rotate('+windDegrees+'deg)';

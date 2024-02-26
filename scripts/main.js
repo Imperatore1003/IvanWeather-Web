@@ -154,6 +154,7 @@ function displayWeather(data) {
     document.getElementById("spClouds").innerHTML = data.clouds.all;
     document.getElementById("spHumidity").innerHTML = data.main.humidity;
     document.getElementById("windDegrees").innerHTML = windDegrees + "°";
+    windDegrees = windDegrees + 180; // The arrow is pointing to the opposite direction because of the meteorological convention
     windArrow.style.mozTransform    = 'rotate('+windDegrees+'deg)';
     windArrow.style.msTransform     = 'rotate('+windDegrees+'deg)';
     windArrow.style.oTransform      = 'rotate('+windDegrees+'deg)';
