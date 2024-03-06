@@ -260,7 +260,9 @@ function getLocation() {
         location.reload();
     } else {
         document.getElementById("card-header").innerHTML = "Getting your location...";
-        document.getElementById("card-body").innerHTML = "<img src='/img/loading.gif' class='w-100' style='cursor: wait;'>";
+        document.getElementById("card-body").innerHTML = `
+        <img src='/img/loading.gif' class='w-100' style='cursor: wait;'>
+        <h6 class="mt-2">This could take up to 10 seconds</h6>`;
         navigator.geolocation.getCurrentPosition((position) => {
             // Success
             latitude = position.coords.latitude;
