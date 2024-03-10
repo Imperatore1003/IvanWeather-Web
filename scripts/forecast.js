@@ -10,12 +10,40 @@ const cookiesExpiresDays = 1;
 const debugMode = false;
 
 function forecast() {
-    if (getCookie("error")) {
-        getWeather("London", mode = 0).then(
-            city => {
-                displayWeather(city);
-            }
-        );
+    let error = getCookie("error");
+    if (error != "") {
+        let ipLocation = sessionStorage.getItem("ipLocation");
+        if (ipLocation) {
+            getWeather(ipLocation, mode = 0).then(
+                data => {
+                    displayWeather(data);
+                }
+            );
+        } else {
+            fetch("https://ipapi.co/json/").then(
+                data => {
+                    data.json().then(
+                        data => {
+                            if (data.error != undefined) {
+                                getWeather("London, GB", mode = 0).then(
+                                data => {
+                                    displayWeather(data);
+                                }
+                            );
+                            } else {
+                                let location = data.city + ", " + data.country;
+                                sessionStorage.setItem("ipLocation", location);
+                                getWeather(location, mode = 0).then(
+                                    data => {
+                                        displayWeather(data);
+                                    }
+                                );
+                            }
+                        }
+                    );
+                }
+            );
+        }
 
     } else if (getCookie("latitude") != "" && getCookie("longitude") != "") {
         getWeather(0, latitude = getCookie("latitude"), longitude = getCookie("longitude"), mode = 1).then(
