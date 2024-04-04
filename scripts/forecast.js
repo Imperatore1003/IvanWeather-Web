@@ -142,6 +142,8 @@ function displayWeather(data) {
 
     document.getElementById("cityName").innerHTML = "<b>" + data.city.name + ", " + data.city.country + "</b>";
 
+    let lastDay;
+
     for (let i = 0; i < data.list.length; i++) {
         let icon = "https://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + ".png";
         const date = new Date(data.list[i].dt * 1000);
@@ -171,6 +173,8 @@ function displayWeather(data) {
         let unitTemp = units ? "C" : "F";
         let windDegrees = data.list[i]["wind"]["deg"];
 
+        let day = weekDays[date.getDay()] + " " + date.getDate();
+
         let rain = "";
         if (data.list[i].rain) {
             rain = `<h4 class="fs-5">Rain: ${data.list[i].rain["3h"]} mm</h4>`;
@@ -181,18 +185,35 @@ function displayWeather(data) {
         }
         
         if (units) { // Metric
-            dateStamp = weekDays[date.getDay()] + " " + date.getDate() + " - " + date.getHours() + ":00";
+            dateStamp = date.getHours() + ":00";
             wind = (wind * 3.6).toFixed(2);
             sunrise = sunrise.toLocaleTimeString('en-US', { hour: 'numeric', hour12: false, minute: 'numeric'}) + " AM";
             sunset = sunset.toLocaleTimeString('en-US', { hour: 'numeric', hour12: false, minute: 'numeric'}) + " PM";
             dewPoint = (temp - ((100 - humidity) / 5)).toFixed(1);
         } else { // Imperial
-            dateStamp = weekDays[date.getDay()] + " " + date.getDate() + " - " + date.toLocaleString('en-US', {hour: 'numeric', hour12: true});
+            dateStamp = date.toLocaleString('en-US', {hour: 'numeric', hour12: true});
             visibility = (visibility * 0.6213711922).toFixed(2);
             pressure = (pressure * 0.0295299831).toFixed(2);
             sunrise = sunrise.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric'});
             sunset = sunset.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric'});
             dewPoint = (((5/9 * (temp - 32)) - ((100 - humidity) / 5)) * (9/5) + 32).toFixed(1);
+        }
+
+        
+        if (day != lastDay) {
+            accordionParent.innerHTML += `
+            <div class="accordion-item">
+                <h2 class="my-0">
+                    <div class="m-0 py-3 text-center">
+                        <div class="row">
+                                <h3 class="fs-5 my-0"><b>${day}</b></h3>
+                            </div>
+                        </div>
+                    </div>
+                </h2>
+            </div>
+            `
+            lastDay = day;
         }
 
         accordionParent.innerHTML += `
@@ -201,20 +222,19 @@ function displayWeather(data) {
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
                     <div class="container m-0 text-center">
                         <div class="row">
-                            <div class="col">
+                            <div class="col d-flex align-items-center justify-content-center">
                                 <img src="${icon}" alt="Icon" class="bg-body rounded-circle">
                             </div>
-                            <div class="col">
+                            <div class="col d-flex align-items-center justify-content-center">
                                 <h3 class="fs-5"><b>${dateStamp}</b></h3>
                             </div>
-                            <div class="col forecastDesktop">
+                            <div class="col forecastDesktop d-flex align-items-center justify-content-center">
                                 <h3 class="fs-5">${mainDescription}</h3>
                             </div>
-                        
-                            <div class="col forecastDesktop">
+                            <div class="col forecastDesktop d-flex align-items-center justify-content-center">
                                 <h3 class="fs-5">${temp}° ${unitTemp}</h3>
                             </div>
-                            <div class="col forecastDesktop">
+                            <div class="col forecastDesktop d-flex align-items-center justify-content-center">
                                 <h3 class="fs-5">${tempMax}°/${tempMin}° ${unitTemp}</h3>
                             </div>
                         </div>
